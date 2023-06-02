@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 
 public class MacropadMenuBar extends MenuBar {
 	
@@ -24,31 +24,53 @@ public class MacropadMenuBar extends MenuBar {
 		super();
 		this.app = app;
 		
+		
+		
 		Menu connectionMenu = new Menu("Connection");
+		
 		
 		Menu portsMenu = new Menu ("Ports");
 		portsMenu.getItems().addAll(getPortsMenuItems());
 		
 		
 		MenuItem connectMenuItem = new MenuItem("Connect");
+		
 		connectMenuItem.setOnAction(new EventHandler<ActionEvent> () {
 			@Override
 			public void handle(ActionEvent e) {
 				MenuItem mi = (MenuItem) e.getSource();
-				if (mi.getText() == "Connect") {
-					app.connect(selectedPortName);
-					
-					mi.setText("Disconnect");
+				if (app.isConnected()) {
+					app.disconnect();
 					
 				}
 				else {
-					app.disconnect();
-					mi.setText("Connect");
+					app.connect(selectedPortName);
 				}
 				
 				
 			}
 		});
+		
+		
+		
+		
+		connectionMenu.setOnShowing(new EventHandler<Event> () {
+
+			@Override
+			public void handle(Event e) {
+				//Update menu
+				System.out.println("Showing menu");
+				
+				portsMenu.setText("Port: " + selectedPortName);
+				portsMenu.getItems().clear();
+				portsMenu.getItems().addAll(getPortsMenuItems());
+				
+				connectMenuItem.setText(app.isConnected()? "Disconnect": "Connect");
+				
+			}
+			
+		});
+		
 		
 		connectionMenu.getItems().addAll(portsMenu, connectMenuItem);
 		this.getMenus().addAll(connectionMenu);
@@ -62,20 +84,29 @@ public class MacropadMenuBar extends MenuBar {
 		ArrayList<MenuItem> menuItems = new ArrayList<MenuItem>();
 		String[] portNames = SerialComManager.getAvailablePorts();
 		
-		for (String s: portNames) {
-			MenuItem newMenu = new MenuItem (s);
-			newMenu.setOnAction(new EventHandler () {
-				@Override
-				public void handle(Event e) {
-					System.out.println("Menu item");
-					
-					selectedPortName = s;
-					
-				}
-			});
-			
-			menuItems.add(newMenu);
-			
+		if (portNames.length > 0) {
+		
+			for (String s: portNames) {
+				MenuItem newMenu = new MenuItem (s);
+				newMenu.setOnAction(new EventHandler<ActionEvent> () {
+					@Override
+					public void handle(ActionEvent e) {
+						System.out.println("Menu item");
+						
+						selectedPortName = s;
+						
+					}
+	
+				});
+				
+				menuItems.add(newMenu);
+				
+			}
+		}
+		else {
+			MenuItem defaultMenu = new MenuItem ("No ports available.");
+			defaultMenu.setDisable(true);
+			menuItems.add(defaultMenu);
 		}
 		
 		return menuItems;

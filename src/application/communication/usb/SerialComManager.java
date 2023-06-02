@@ -33,6 +33,7 @@ public class SerialComManager extends Thread implements SerialPortDataListenerWi
 	private SerialPort port;
 	
 	
+	
 	private String portName;
 	
 	private String portInfo;
@@ -80,6 +81,10 @@ public class SerialComManager extends Thread implements SerialPortDataListenerWi
 	public void desconectar () {
 		port.closePort();
 		System.out.println("Desconectando " + portName);
+	}
+	
+	public boolean isConnected() {
+		return port != null? port.isOpen(): false;
 	}
 	
 	

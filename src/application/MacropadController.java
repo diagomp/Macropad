@@ -213,18 +213,20 @@ public class MacropadController extends Application {
 	
 	
 	
-	public void connect(String portName) {
+	public boolean connect(String portName) {
 		scm = new SerialComManager(this);
 		scm.setPortName(portName);
 		
-		scm.conectar();
+		return scm.conectar();
 		
 	}
 	
-	
-	
 	public void disconnect () {
 		scm.desconectar();
+	}
+	
+	public boolean isConnected() {
+		return scm != null? scm.isConnected(): false;
 	}
 	
 	
