@@ -89,6 +89,9 @@ public class SerialComManager extends Thread implements SerialPortDataListenerWi
 	
 	private void processSerialRequest (byte b) {
 		
+		
+		
+		
 		if (b >= 0) {
 			
 			/*if (b == 0) {
@@ -99,7 +102,7 @@ public class SerialComManager extends Thread implements SerialPortDataListenerWi
 			//SHORT PRESS
 			System.out.println("SHORT PRESS: " + ((int) b));
 			
-			app.getProfileManager().shortPress((int) (b));
+			//app.getProfileManager().shortPress((int) (b));
 		}
 		else  {
 			/*if (b == 0) {
@@ -189,7 +192,7 @@ public class SerialComManager extends Thread implements SerialPortDataListenerWi
 			byte[] newData = new byte[port.bytesAvailable()];
 			port.readBytes(newData,  newData.length);
 			for (int i = 0; i < newData.length; i++) {
-				processSerialRequest(newData[i]);
+				app.processSerialRequest(newData[i]);
 			}
 		}
 		else if (serialEvent.getEventType() == SerialPort.LISTENING_EVENT_PORT_DISCONNECTED) {

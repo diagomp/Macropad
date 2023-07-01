@@ -8,12 +8,15 @@ import java.util.ArrayList;
 
 import com.sun.glass.events.KeyEvent;
 
+import javafx.application.Platform;
+
 public class SystemController {
 	
 	Robot robot;
 	ProfileManager pm;
 	
 	public SystemController (ProfileManager pm) {
+		this.pm = pm;
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
@@ -24,25 +27,8 @@ public class SystemController {
 	}
 	
 	public void executeCommand (String cmd) {
-		//Primero discernimos entre el tipo de comando
 		
-		//Atajos de teclado
-		//Comandos para CMD
-		//Escritura de texto
-		//Archivo XML
-		
-		/*if (cmd != null && cmd.length() > 0) {
-			if (cmd.charAt(0) == '>') {
-				//String[] cmdCommands
-				Runtime rt = Runtime.getRuntime();
-				try {
-					rt.exec(new String[] {"cmd.exe"});
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}*/
+		System.out.println("Executing command: " + cmd);
 		
 		if (cmd != null && cmd.length() > 0) {
 			cmd = cmd.toUpperCase();
@@ -98,10 +84,11 @@ public class SystemController {
 					else {
 						//COMANDOS PERSONALIZADOS
 						if (c.equals("NEXT_PROFILE")) {
-							pm.nextProfile();
+							Platform.runLater(() -> {pm.nextProfile();});
+							
 						}
 						else if (c.equals("PREV_PROFILE")) {
-							pm.prevProfile();
+							Platform.runLater(()->{pm.prevProfile();});
 						}
 						else if (c.length() >= 8 && c.substring(0, 8).equals("PROFILE:")) {
 							System.out.println("Change profile to " + c.substring(8, c.length()));
@@ -110,7 +97,7 @@ public class SystemController {
 						}
 						else if (c.equals("MOUSEWHEEL_UP")) {
 							robot.mouseWheel(1);
-						}
+						} 
 						else if (c.equals("MOUSEWHEEL_DOWN")) {
 							robot.mouseWheel(-1);
 						}

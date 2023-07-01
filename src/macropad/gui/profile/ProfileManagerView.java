@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
@@ -44,6 +45,7 @@ public class ProfileManagerView extends AnchorPane  {
 		profilesLabel.setStyle("-fx-font-weight: bold;");
 		
 		listView = new ListView<Profile>();
+		VBox.setVgrow(listView, Priority.ALWAYS);
 		listView.setCellFactory(new ProfileCellFactory(pm));
 		listView.getSelectionModel().select(pm.getCurrentProfile());
 		

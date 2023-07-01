@@ -1,5 +1,6 @@
 package macropad;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -14,9 +15,19 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import macropad.communication.usb.SerialComManager;
+import macropad.key.Key;
 
 public class ProfileManager {
 	private MacropadController app;
@@ -40,6 +51,7 @@ public class ProfileManager {
 		currentKeys = FXCollections.observableArrayList();
 		
 		robot = new SystemController(this);
+		
 		
 		
 		try {
@@ -94,7 +106,7 @@ public class ProfileManager {
 			currentKeys.clear();
 			currentKeys.addAll(profiles.get(currentProfile).getKeys());
 			
-			
+			//setCurrentProfile(currentProfile);
 			
 			System.out.println("-------------------------------------");
 			for (Profile p: profiles) System.out.println(p.getPath());
@@ -131,12 +143,14 @@ public class ProfileManager {
 		currentProfile = 0;
 	}
 	
+	
+	/*TODO: Cambiar funciones short/longPress a solamente una función execute(byte id)*/
 	public void shortPress (int button) {
-		robot.executeCommand(profiles.get(currentProfile).getShortCmd(button));
+		//robot.executeCommand(profiles.get(currentProfile).getShortCmd(button));
 	}
 	
 	public void longPress (int button) {
-		robot.executeCommand(profiles.get(currentProfile).getLongCmd(button));
+		//robot.executeCommand(profiles.get(currentProfile).getLongCmd(button));
 	}
 	
 	public void saveChanges (int profileId) {
@@ -261,5 +275,6 @@ public class ProfileManager {
 	public ArrayList<Profile> getProfiles () { return profiles; }
 	public ObservableList<Key> getCurrentKeys () { return currentKeys; }
 	public int getCurrentProfile () { return currentProfile; }
+	public Profile getProfile() { return profiles.get(currentProfile); }
 
 }

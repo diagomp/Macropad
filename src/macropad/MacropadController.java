@@ -28,7 +28,9 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import macropad.communication.usb.SerialComManager;
 import macropad.gui.menu.MacropadMenuBar;
+import macropad.gui.profile.KeyboardPane;
 import macropad.gui.profile.ProfileManagerView;
+import macropad.key.Key;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
@@ -62,16 +64,21 @@ import javafx.scene.control.SplitPane;
 
 public class MacropadController extends Application {
 	
-	static ObservableList<Key> data;
+	//static ObservableList<Key> data;
 	static ProfileManager profileManager;
 	static SerialComManager scm;
 	static Stage primaryStage;
 	
+	
+	private SystemController robot;
+	
 	public ProfileManagerView pmv;
+	public KeyboardPane kp;
 	
 	@Override
 	public void init () {
 		profileManager = new ProfileManager(this);
+		robot = new SystemController(profileManager);
 		createSystemTray();
 	}
 	
@@ -91,8 +98,8 @@ public class MacropadController extends Application {
 		
 		BorderPane root = new BorderPane();
 		
-		Scene scene = new Scene (root, 680, 420);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		Scene scene = new Scene (root, 720, 480);
+		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.initStyle(StageStyle.DECORATED);
 		//primaryStage.show();
@@ -104,121 +111,22 @@ public class MacropadController extends Application {
 		root.setTop(new MacropadMenuBar(this));
 		
 		SplitPane splitPane = new SplitPane();
+		splitPane.setDividerPositions(0.4);
 		
 		pmv = new ProfileManagerView(this, profileManager);
-		splitPane.getItems().addAll(pmv, new Pane());
+		kp = new KeyboardPane(profileManager);
+		changeColor(profileManager.getProfiles().get(profileManager.getCurrentProfile()).getR(),
+				profileManager.getProfiles().get(profileManager.getCurrentProfile()).getG(),
+				profileManager.getProfiles().get(profileManager.getCurrentProfile()).getB());
+		updateProfileView();
+		//profileManager.setCurrentProfile(profileManager.getCurrentProfile());
+		splitPane.getItems().addAll(pmv, kp);
 		
 		root.setCenter(splitPane);
 		
 		
-		
-			
-			/*
-			HBox hb = new HBox();
-			hb.setSpacing(5.0);
-			hb.setPadding(new Insets(5, 5, 5, 5));
-			root.setCenter(root);*/
-			
-			
-			
-			
+		primaryStage.show();
 
-			
-			
-			
-			
-			
-			
-			/*VBox leftPanel = new VBox();
-			leftPanel.setSpacing(5.0);
-			leftPanel.getChildren().add(new Label("Saved program profiles."));
-			
-			ListView<Profile> listView = new ListView<Profile> ();
-			listView.setCellFactory(new ProfileCellFactory(profileManager));
-			//listView.setCellFactory(new Callback<ListView<Profile>>, ListCell<Profile> () {});
-			listView.setItems(FXCollections.observableArrayList(profileManager.getProfiles()));
-			//listView.setPadding(new Insets(10, 10, 10, 10));
-			
-			//root.setLeft(listView);
-			leftPanel.getChildren().add(listView);
-			root.getChildren().add(leftPanel);
-			
-			
-			
-			
-			VBox rightPanel = new VBox();
-			rightPanel.setSpacing(5);
-			rightPanel.setPadding(new Insets(5, 5, 5, 5));
-			HBox.setHgrow(rightPanel, Priority.ALWAYS);
-			
-			Label programNameLabel = new Label("Program name");
-			programNameLabel.setStyle("-fx-font-size: 16pt; ");
-			programNameLabel.setWrapText(true);
-			HBox.setHgrow(programNameLabel, Priority.ALWAYS);
-			
-			Button newProfileButton = new Button("New profile");
-			
-			newProfileButton.setAlignment(Pos.BASELINE_RIGHT);
-			
-			Region r = new Region();
-			HBox.setHgrow(r, Priority.ALWAYS);
-			HBox programNameHbox = new HBox(programNameLabel, r, newProfileButton);
-			
-			rightPanel.getChildren().addAll(programNameHbox);
-			
-			TableView table = new TableView();
-			table.setEditable(true);
-			table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-			
-			TableColumn<Key, String> shortPressColumn = new TableColumn<Key, String>("Short Key Press");
-			shortPressColumn.setCellValueFactory(new PropertyValueFactory<Key, String>("shortCmd"));
-			shortPressColumn.setPrefWidth(table.getWidth()*0.4);
-			shortPressColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-			shortPressColumn.setOnEditCommit(new EventHandler<CellEditEvent<Key, String>>() {
-				@Override
-				public void handle(CellEditEvent<Key, String> k) {
-					((Key) k.getTableView().getItems().get(k.getTablePosition().getRow())).setShortCmd(k.getNewValue());
-					profileManager.saveChanges(profileManager.getCurrentProfile());
-					
-				}
-			});
-			
-			
-			
-			TableColumn<Key, String> longPressColumn = new TableColumn<Key, String>("Long Key Press");
-			//longPressColumn.setCellValueFactory(new PropertyValueFactory<Key, String>("longCmd"));
-			longPressColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-			longPressColumn.setCellValueFactory(new PropertyValueFactory<Key, String>("longCmd"));
-			longPressColumn.setPrefWidth(table.getWidth()*0.4);
-			longPressColumn.setOnEditCommit(new EventHandler<CellEditEvent<Key, String>>() {
-				@Override
-				public void handle(CellEditEvent<Key, String> k) {
-					((Key) k.getTableView().getItems().get(k.getTablePosition().getRow())).setLongCmd(k.getNewValue());
-					profileManager.saveChanges(profileManager.getCurrentProfile());
-					
-				}
-			});
-			
-			
-			table.getColumns().addAll(shortPressColumn, longPressColumn);
-			table.setItems(profileManager.getCurrentKeys());
-			
-			
-			KeyboardPane keyboardPane = new KeyboardPane(profileManager);
-			//keyboardPane.setKeys(profileManager);
-			rightPanel.getChildren().add(keyboardPane);
-			//rightPanel.getChildren().add(table);
-			root.getChildren().add(rightPanel);
-
-			*/
-			/***********************************************************************************/
-			
-			
-			primaryStage.show();
-		//}
-		//catch(Exception e) {
-			//e.printStackTrace();
-		//}
 	}
 	
 	@Override
@@ -228,16 +136,16 @@ public class MacropadController extends Application {
 	}
 	
 	public static void main(String[] args)   {
-		
+		System.out.println("Application started");
 		launch(args);
 	}
 	
 	
 	
-	public boolean connect(String portName) {
+	public boolean connect(String portName)  {
 		scm = new SerialComManager(this);
 		scm.setPortName(portName);
-		
+		profileManager.setCurrentProfile(profileManager.getCurrentProfile());
 		return scm.connect();
 		
 	}
@@ -257,6 +165,7 @@ public class MacropadController extends Application {
 	
 	public void changeColor (int r, int g, int b) {
 		System.out.println("Changing color");
+		//kp.changeBorder(r, g, b);
 		if (scm != null) {
 			scm.sendMessage(r + "," + g + "," + b + "\n");
 		}
@@ -266,6 +175,7 @@ public class MacropadController extends Application {
 		//updateSelection();
 		pmv.update();
 		pmv.updateSelection();
+		kp.update();
 		
 	}
 	
@@ -273,6 +183,18 @@ public class MacropadController extends Application {
 		//
 	}
 	
+	public void executeCommand (String cmd) {
+		robot.executeCommand(cmd);
+	}
+	
+	public void processSerialRequest(byte b) {
+		
+		if (b < 2*(Macropad.NUM_COLUMNS*Macropad.NUM_ROWS + 2) && b >= 0) {
+			System.out.println("Byte sent: " + b);
+			robot.executeCommand(profileManager.getCurrentKeys().get(b).getCmd());
+		}
+		
+	}
 	
 	
 	private static void createSystemTray() {
@@ -348,5 +270,7 @@ public class MacropadController extends Application {
 		
 		
 	}
+
+
 	
 }
