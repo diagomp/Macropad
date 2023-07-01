@@ -27,7 +27,7 @@ import macropad.key.Key;
 
 public class Profile {
 	
-	public static final String PROFILE_PATH = "D:/MacroKeypad/AppProfiles/";
+	//public static final String PROFILE_PATH = "D:/MacroKeypad/AppProfiles/";
 	
 	
 	private String appName;
@@ -42,7 +42,7 @@ public class Profile {
 	
 	
 	public static void main (String[] args)  {
-		Profile p = new Profile("D:/MacroKeypad/AppProfiles/default.xml");
+		Profile p = new Profile(Macropad.PROFILES_PATH + "default.xml");
 	 
 	}
 	
@@ -160,7 +160,7 @@ public class Profile {
 			TransformerFactory tf = TransformerFactory.newInstance();
 			Transformer transformer = tf.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			FileOutputStream output = new FileOutputStream(Profile.PROFILE_PATH + getProfileName() + ".xml");
+			FileOutputStream output = new FileOutputStream(Macropad.PROFILES_PATH + getProfileName() + ".xml");
 			StreamResult result = new StreamResult(output);
 			
 			transformer.transform(source,  result);
@@ -176,7 +176,7 @@ public class Profile {
 	}
 	
 	public void deleteProfile () {
-		File f = new File (Profile.PROFILE_PATH + profileName + ".xml");
+		File f = new File (Macropad.PROFILES_PATH + profileName + ".xml");
 		f.delete();
 	}
 	

@@ -56,7 +56,7 @@ public class ProfileManager {
 		
 		try {
 			//Carga todos los perfiles del directorio AppProfiles
-			File profilesDir = new File(Profile.PROFILE_PATH);
+			File profilesDir = new File(Macropad.PROFILES_PATH);
 			profilesDir.mkdirs();
 			
 			File[] files = profilesDir.listFiles();
@@ -171,7 +171,7 @@ public class ProfileManager {
 		int counter = 1;
 		boolean found = false;
 		
-		File folder = new File (Profile.PROFILE_PATH);
+		File folder = new File (Macropad.PROFILES_PATH);
 		File[] files = folder.listFiles();
 		
 		

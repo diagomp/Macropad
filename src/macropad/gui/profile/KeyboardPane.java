@@ -103,9 +103,9 @@ public class KeyboardPane extends AnchorPane {
 		content.getChildren().add(header);
 		
 		gridPane = new GridPane();
-		gridPane.setPrefWidth(290.0);
-		gridPane.setMaxWidth(290.0);
-		gridPane.setMinWidth(290.0);
+		gridPane.setPrefWidth(Macropad.NUM_COLUMNS*290.0/4);
+		gridPane.setMaxWidth(Macropad.NUM_COLUMNS*290.0/4);
+		gridPane.setMinWidth(Macropad.NUM_COLUMNS*290.0/4);
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -121,7 +121,7 @@ public class KeyboardPane extends AnchorPane {
 			for (int i = 0; i < Macropad.NUM_COLUMNS; i++) {
 				int switchNumber = j*Macropad.NUM_COLUMNS + i;
 				ControlPane tf;
-				if (switchNumber == 0 || switchNumber == 3) {
+				if (enc < Macropad.ENCODER_POSITIONS.length && switchNumber == Macropad.ENCODER_POSITIONS[enc]) {
 					tf = ControlPane.getControlPane(ControlPane.ENCODER_CONTROL, profileManager);
 					tf.setIds((byte)( 2*(i + j*Macropad.NUM_COLUMNS)), (byte) (2*(i + j*Macropad.NUM_COLUMNS) + 1), (byte) (2*Macropad.NUM_COLUMNS*Macropad.NUM_ROWS + 2*enc), (byte)(2*Macropad.NUM_COLUMNS*Macropad.NUM_ROWS + 2*enc + 1));
 					enc += 1;
