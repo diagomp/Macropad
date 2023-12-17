@@ -21,9 +21,9 @@ The use of a controller application has some advantages in comparisong of direct
 
 There is a lot of things that can be done to improve the project. Here are some features I want to add at some point. Feel free to contribute to this project and add thouse features, or any other
 
-- [] It would be great if the controller application could detect automatically the program the user is using at any moment, and change the macropad profile accordingly.
-- [] Add an option for the program to work by itself, without the need of an Arduino.
-- [] Improve the connection process. Maybe if the last port used is still available when the application opens, connect automaticaly to it.
+- [ ] It would be great if the controller application could detect automatically the program the user is using at any moment, and change the macropad profile accordingly.
+- [ ] Add an option for the program to work by itself, without the need of an Arduino.
+- [ ] Improve the connection process. Maybe if the last port used is still available when the application opens, connect automaticaly to it.
 
 
 ## Dependencies
