@@ -22,12 +22,12 @@ The use of a controller application has some advantages in comparisong of direct
 2. Clone this repository on your PC.
 3. Open the file [Macropad.java](src/macropad/Macropad.java) and change the constants according to your preferences.
 
-''
+``
 public static int NUM_ROWS = 3;       //Number of rows of your macro keyboard
 public static int NUM_COLUMNS = 4;    //Number of columns
 public static String PROFILES_PATH = "D:/MacroKeypad/AppProfiles/";  //The path you want the information of profiles to be stored
 public static int[] ENCODER_POSITIONS = {0, 3};  //The positions were the encoders are located within the keyboard matrix (0 to NUM_COLUMNS*NUM_ROWS - 1)
-''
+``
 
 4. Run the file [MacropadController.java](src/macropad/MacropadController.java) as a Java Application.
 
