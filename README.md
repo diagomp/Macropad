@@ -33,14 +33,24 @@ public static int[] ENCODER_POSITIONS = {0, 3};  //The positions were the encode
 
 #### Hardware
 
+1. Open the file [macropad_firmware.ino](arduino_firmware/macropad_firmware.ino) with your Arduino IDE.
+2. Configure the following options according to your preferences. Make sure this preferences are coherent with the preferences you stablished in the controller application (NUM_ROWS, NUM_COLUMNS...).
 
+```
+const int columnPins[] = {4, 5, 6, 7};  //
+const int rowPins[] = {13, A0, A1};
+const int ledPins[] = {9, 10, 11};
+```
+  
+3. Compile and load the firmware on your Arduino.
+4. For the electronics, you have to make a pushbutton matrix using the pins stablished in the preferences. You can add a RGB LED using the pins in 'ledPins[]' for R, G and B channels respectively.
 
 ## Future releases
 
 There is a lot of things that can be done to improve the project. Here are some features I want to add at some point. Feel free to contribute to this project and add thouse features, or any other
 
 - [ ] It would be great if the controller application could detect automatically the program the user is using at any moment, and change the macropad profile accordingly.
-- [ ] Add an option for the program to work by itself, without the need of an Arduino.
+- [ ] Add an option for the controller application to work by itself, without the need of an Arduino.
 - [ ] Improve the connection process. Maybe if the last port used is still available when the application opens, connect automaticaly to it.
 
 
