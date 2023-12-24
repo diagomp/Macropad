@@ -40,6 +40,9 @@ public static int[] ENCODER_POSITIONS = {0, 3};  //The positions were the encode
 const int columnPins[] = {4, 5, 6, 7};
 const int rowPins[] = {13, A0, A1};
 const int ledPins[] = {9, 10, 11};      //This pins need to be PWM in your Arduino
+
+const int encoderAPins[] = {3, A2};     //First pin must be an interrupt pin in your Arduino
+const int encoderBPins[] = {2, 12};     //First pin must be an interrupt pin in your Arduino
 ```
   
 3. Compile and load the firmware on your Arduino.
