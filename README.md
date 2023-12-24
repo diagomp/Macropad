@@ -37,13 +37,13 @@ public static int[] ENCODER_POSITIONS = {0, 3};  //The positions were the encode
 2. Configure the following options according to your preferences. Make sure this preferences are coherent with the preferences you stablished in the controller application (NUM_ROWS, NUM_COLUMNS...).
 
 ```
-const int columnPins[] = {4, 5, 6, 7};  //
+const int columnPins[] = {4, 5, 6, 7};
 const int rowPins[] = {13, A0, A1};
-const int ledPins[] = {9, 10, 11};
+const int ledPins[] = {9, 10, 11};      //This pins need to be PWM in your Arduino
 ```
   
 3. Compile and load the firmware on your Arduino.
-4. For the electronics, you have to make a pushbutton matrix using the pins stablished in the preferences. You can add a RGB LED using the pins in 'ledPins[]' for R, G and B channels respectively.
+4. For the electronics, you have to make a pushbutton matrix using the pins stablished in the preferences. You can add a RGB LED using the pins in `ledPins[]` for R, G and B channels respectively.
 
 ## Future releases
 
